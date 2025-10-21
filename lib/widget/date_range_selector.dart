@@ -42,7 +42,8 @@ class _DateRangeSelectorState extends State<DateRangeSelector> {
 
     if (picked != null) {
       setState(() {
-        _startDate = picked;
+        // Set to start of day (00:00:00)
+        _startDate = DateTime(picked.year, picked.month, picked.day);
       });
     }
   }
@@ -58,7 +59,8 @@ class _DateRangeSelectorState extends State<DateRangeSelector> {
 
     if (picked != null) {
       setState(() {
-        _endDate = picked;
+        // Set to start of day (we handle inclusivity in the filter logic)
+        _endDate = DateTime(picked.year, picked.month, picked.day);
       });
     }
   }

@@ -28,27 +28,30 @@ class DateFilter {
     }
 
     return expenses.where((expense) {
+      // Normalize expense date to start of day for comparison
       final expenseDate = DateTime(
         expense.date.year,
         expense.date.month,
         expense.date.day,
       );
+      
+      // Normalize start date to start of day
       final start = DateTime(
         startDate!.year,
         startDate!.month,
         startDate!.day,
       );
+      
+      // Normalize end date to start of day (we'll do inclusive comparison)
       final end = DateTime(
         endDate!.year,
         endDate!.month,
         endDate!.day,
-        23,
-        59,
-        59,
       );
 
-      return expenseDate.isAfter(start.subtract(const Duration(days: 1))) &&
-          expenseDate.isBefore(end.add(const Duration(days: 1)));
+      // Check if expense date is within range (inclusive on both ends)
+      return (expenseDate.isAtSameMomentAs(start) || expenseDate.isAfter(start)) &&
+             (expenseDate.isAtSameMomentAs(end) || expenseDate.isBefore(end));
     }).toList();
   }
 
