@@ -74,31 +74,26 @@ class Chart extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 200,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                for (int i = 0; i < buckets.length; i++)
-                  ChartBar(
-                    fill: buckets[i].totalExpenses == 0
-                        ? 0
-                        : buckets[i].totalExpenses / maxTotalExpense,
-                    amount: buckets[i].totalExpenses,
-                    category: buckets[i].category,
-                  )
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               for (final bucket in buckets)
                 Expanded(
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      SizedBox(
+                        height: 200,
+                        child: ChartBar(
+                          fill: bucket.totalExpenses == 0
+                              ? 0
+                              : bucket.totalExpenses / maxTotalExpense,
+                          amount: bucket.totalExpenses,
+                          category: bucket.category,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       Icon(
                         categoryIcons[bucket.category],
                         size: 24,
